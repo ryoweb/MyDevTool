@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Card, CardBody, Image, Button, Progress } from "@nextui-org/react";
 import { HeartIcon } from "./HeartIcon";
 import { PauseCircleIcon } from "./PauseCircleIcon";
@@ -14,11 +14,10 @@ export default function Music() {
     const secretClient = process.env.NEXT_PUBLIC_SPOTIFY_SECRET_CLIENT;
     const redirectUri = 'http://localhost:3000/';
 
-    const scopes = ['user-library-modify', 'user-read-playback-state', 'user-modify-playback-state'];
-    const [accessToken, setAccessToken] = useState(null);
-    const [authCode, setAuthCode] = useState(null);
-    const [trackUri, setTrackUri] = useState(null);
-    const [liked, setLiked] = useState(false);
+    const [accessToken, setAccessToken] = useState<string | null>(null);
+    const [authCode, setAuthCode] = useState<string | null>(null);
+    const [trackUri, setTrackUri] = useState<any | null>(null);
+    const [liked, setLiked] = useState<boolean>(false);
 
     // ユーザーの認証を行う
     useEffect(() => {
@@ -30,15 +29,15 @@ export default function Music() {
                 setAuthCode(code);
             } else {
                 // 認証コードがない場合のみリダイレクトを行う
-                window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=code`;
+                window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
             }
         }
-    }, [authCode, clientId, redirectUri, scopes]);
+    }, [authCode, clientId, redirectUri]);
 
     //アクセストークンを取得
     useEffect(() => {
         if (authCode && !accessToken) {
-            async function fetchAccessToken() {
+            const fetchAccessToken = async () => {
                 const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
                     method: 'POST',
                     headers: {
@@ -56,17 +55,16 @@ export default function Music() {
         }
     }, [authCode, accessToken, clientId, secretClient, redirectUri]);
 
-    //再生中の曲の情報を取得する関数を定義
-    const fetchCurrentPlaying = async () => {
-        const currentPlayingResponse = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        setTrackUri(await currentPlayingResponse.json());
-    }
-    //再生中の曲の情報する関数を発火させる
+    //再生中の曲の情報を取得する
     useEffect(() => {
+        const fetchCurrentPlaying = async () => {
+            const currentPlayingResponse = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            setTrackUri(await currentPlayingResponse.json());
+        }
         if (accessToken) {
             fetchCurrentPlaying();
         }
@@ -142,7 +140,7 @@ export default function Music() {
     //現在再生中の曲をお気に入りにする
     useEffect(() => {
         if (liked) {
-            async function fetchLiked() {
+            const fetchLiked = async () => {
                 await fetch(`https://api.spotify.com/v1/me/tracks?ids=${trackUri?.item?.id}`, {
                     method: 'PUT',
                     headers: {
@@ -155,9 +153,9 @@ export default function Music() {
     }, [liked, accessToken, trackUri]);
 
     //シークバーのため、msを分秒に変換する関数を定義
-    function formatTime(ms) {
-        const minutes = Math.floor(ms / 60000);
-        const seconds = ((ms % 60000) / 1000).toFixed(0);
+    function formatTime(ms: number) {
+        const minutes: number = Math.floor(ms / 60000);
+        const seconds: number = ((ms % 60000) / 1000);
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     }
     //シークバーのため、現在の曲の再生時間を取得する関数を定義

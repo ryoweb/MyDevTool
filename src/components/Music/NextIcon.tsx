@@ -1,4 +1,16 @@
-export const NextIcon = ({ size = 24, width, height, ...props }) => (
+// interface
+interface NextIconProps {
+    size?: number;
+    width?: number;
+    height?: number;
+    className?: string;
+    onClick?: React.MouseEventHandler<SVGSVGElement>;
+}
+export const NextIcon: React.FC<NextIconProps> = ({
+    size = 24,
+    width,
+    height,
+    ...props }) => (
     <svg
         aria-hidden="true"
         fill="none"

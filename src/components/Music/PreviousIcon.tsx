@@ -1,5 +1,15 @@
-import React from "react";
-export const PreviousIcon = ({ size = 24, width, height, ...props }) => (
+interface PreviousIconProps {
+    size?: number;
+    width?: number;
+    height?: number;
+    className?: string;
+    onClick?: React.MouseEventHandler<SVGSVGElement>;
+}
+export const PreviousIcon: React.FC<PreviousIconProps> = ({
+    size = 24,
+    width,
+    height,
+    ...props }) => (
     <svg
         aria-hidden="true"
         fill="none"

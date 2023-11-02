@@ -1,25 +1,35 @@
 import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem, Avatar, Pagination, CircularProgress } from '@nextui-org/react';
 
-export default function Zenn() {
-    const [data, setData] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(true); // ロード中かどうかを示す状態
+type Item = {
+    id: string;
+    title: string;
+    slug: string;
+    likesCount: number;
+    user: {
+        username: string;
+        avatarSmallUrl: string;
+    };
+};
 
-    const itemsPerPage = 3; // 1ページあたりの記事数
+export default function Zenn() {
+    const [data, setData] = useState<Item[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const itemsPerPage = 3;
 
     useEffect(() => {
         const fetchZenn = async () => {
-            setIsLoading(true); // ロード中に設定する
+            setIsLoading(true);
             const res = await fetch('https://zenn-api.vercel.app/api/trendTech');
             const data = await res.json();
             setData(data);
-            setIsLoading(false); // ロード完了に設定する
+            setIsLoading(false);
         }
         fetchZenn();
-    }, []);
+    }, [itemsPerPage]);
 
-    // 現在のページに表示する記事を取得する関数
     const getItems = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
@@ -28,9 +38,9 @@ export default function Zenn() {
 
     return (
         <div>
-            {isLoading ? ( // ロード中の場合に表示するコンポーネント
+            {isLoading ? (
                 <div className="flex justify-center items-center h-screen">
-                    <CircularProgress color="primary" size={100} />
+                    <CircularProgress color="primary" size="sm" />
                 </div>
             ) : (
                 <div>
@@ -42,7 +52,7 @@ export default function Zenn() {
                                 startContent={
                                     <Avatar
                                         isBordered
-                                        color={["primary", "success", "warning", "error"][Math.floor(Math.random() * 4)]}
+                                        color={["primary", "default", "secondary", "success", "warning", "danger"][Math.floor(Math.random() * 6)] as "primary" | "default" | "secondary" | "success" | "warning" | "danger"}
                                         radius="lg"
                                         src={item.user.avatarSmallUrl}
                                     />

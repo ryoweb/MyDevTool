@@ -1,11 +1,22 @@
-export const HeartIcon = ({
+import React from "react";
+
+interface HeartIconProps {
+    size?: number;
+    width?: number;
+    height?: number;
+    strokeWidth?: number;
+    fill?: string;
+    className?: string;
+    onClick?: React.MouseEventHandler<SVGSVGElement>;
+}
+
+export const HeartIcon: React.FC<HeartIconProps> = ({
     size = 24,
     width,
     height,
     strokeWidth = 1.5,
     fill = "none",
-    ...props
-}) => (
+    ...props }) => (
     <svg
         aria-hidden="true"
         fill={fill}
