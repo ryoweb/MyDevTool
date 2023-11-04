@@ -13,6 +13,7 @@ export default function Music() {
     const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
     const secretClient = process.env.NEXT_PUBLIC_SPOTIFY_SECRET_CLIENT;
     const redirectUri = 'http://localhost:3000/';
+    const scope = 'user-read-playback-state user-modify-playback-state user-library-modify playlist-read-private playlist-modify-public user-top-read';
 
     const [accessToken, setAccessToken] = useState<string | null>(null);
     const [authCode, setAuthCode] = useState<string | null>(null);
@@ -29,7 +30,7 @@ export default function Music() {
                 setAuthCode(code);
             } else {
                 // 認証コードがない場合のみリダイレクトを行う
-                window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+                window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
             }
         }
     }, [authCode, clientId, redirectUri]);
@@ -63,7 +64,13 @@ export default function Music() {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            setTrackUri(await currentPlayingResponse.json());
+            // 取得できれば格納
+            if (currentPlayingResponse.status === 200) {
+                setTrackUri(await currentPlayingResponse.json());
+            } else {
+                // 取得できなければnull
+                setTrackUri(null);
+            }
         }
         if (accessToken) {
             fetchCurrentPlaying();
@@ -215,7 +222,6 @@ export default function Music() {
                                 value={calculateDynamicValue()}
                             />
                             <div className="flex justify-between">
-                                {/* <p className="text-small">1:23</p> */}
                                 <p className="text-small text-foreground/50">{formatTime(trackUri?.item?.duration_ms ?? 0)}</p>
                             </div>
                         </div>

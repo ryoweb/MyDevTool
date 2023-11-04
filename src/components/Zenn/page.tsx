@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem, Avatar, Pagination, CircularProgress } from '@nextui-org/react';
 
@@ -39,8 +40,8 @@ export default function Zenn() {
     return (
         <div>
             {isLoading ? (
-                <div className="flex justify-center items-center h-screen">
-                    <CircularProgress color="primary" size="sm" />
+                <div className="flex">
+                    <CircularProgress color="primary" size="lg" />
                 </div>
             ) : (
                 <div>
@@ -52,7 +53,7 @@ export default function Zenn() {
                                 startContent={
                                     <Avatar
                                         isBordered
-                                        color={["primary", "default", "secondary", "success", "warning", "danger"][Math.floor(Math.random() * 6)] as "primary" | "default" | "secondary" | "success" | "warning" | "danger"}
+                                        color="default"
                                         radius="lg"
                                         src={item.user.avatarSmallUrl}
                                     />
@@ -67,7 +68,7 @@ export default function Zenn() {
                             </AccordionItem>
                         ))}
                     </Accordion >
-                    <Pagination total={5} initialPage={1} onChange={(page) => setCurrentPage(page)}
+                    <Pagination total={7} initialPage={1} variant={"bordered"} onChange={(page) => setCurrentPage(page)}
                     />
                 </div>
             )}

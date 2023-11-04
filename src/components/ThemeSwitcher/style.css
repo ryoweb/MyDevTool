@@ -1,0 +1,257 @@
+@keyframes easingAni {
+
+    0%,
+    99% {
+        pointer-events: none;
+    }
+
+    100% {
+        pointer-events: auto;
+    }
+}
+
+@keyframes easingBack {
+
+    0%,
+    99% {
+        pointer-events: none;
+    }
+
+    100% {
+        pointer-events: auto;
+    }
+}
+
+.weather-checkbox {
+    aspect-ratio: 5 / 2;
+    background-color: #3589ab;
+    border-radius: 100vw;
+    width: 1em;
+    font-size: 150px;
+    transition: background-color .6s ease-in-out;
+    display: block;
+    position: relative;
+    box-shadow: -1px -1px 3px 1px #0000004d, 2px 2px 8px #fffc;
+}
+
+.weather-checkbox__button {
+    aspect-ratio: 1;
+    z-index: 5;
+    cursor: pointer;
+    background-color: #fb0;
+    border-radius: 50%;
+    height: calc(100% - 32px);
+    transition: left .6s ease-in-out, transform .6s ease-in-out;
+    animation: 1s ease-in-out forwards easingAni;
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    overflow: hidden;
+    box-shadow: inset 3px 3px 3px #fffc, inset -2px -2px 8px #00000029, .01em .01em .01em #0000004d;
+}
+
+.weather-checkbox__button:hover,
+.weather-checkbox__button:hover+.weather-checkbox__sun-shadow {
+    transition: left .4s ease-in-out, transform .4s ease-in-out;
+    left: 24px;
+}
+
+.weather-checkbox__moon {
+    aspect-ratio: 1;
+    background-color: #d0d0d0;
+    border-radius: 50%;
+    width: 100%;
+    transition: transform .6s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(120%);
+    box-shadow: inset 3px 3px 3px #fffc, inset -2px -2px 8px #00000029;
+}
+
+.weather-checkbox__moon-crater {
+    aspect-ratio: 1;
+    background-color: #b0b0b0;
+    border-radius: 50%;
+    width: 30%;
+    position: absolute;
+    top: .13em;
+    left: .05em;
+    box-shadow: inset 1px 1px 4px #0000004d;
+}
+
+.weather-checkbox__moon-crater:before,
+.weather-checkbox__moon-crater:after {
+    content: "";
+    aspect-ratio: 1;
+    background-color: #b0b0b0;
+    border-radius: 50%;
+    width: 60%;
+    position: absolute;
+    top: -.08em;
+    left: .07em;
+    box-shadow: inset 1px 1px 4px #0000004d;
+}
+
+.weather-checkbox__moon-crater:after {
+    top: .05em;
+    left: .14em;
+}
+
+.weather-checkbox__sun-shadow {
+    aspect-ratio: 1;
+    z-index: 3;
+    border-radius: 50%;
+    height: calc(100% - 32px);
+    transition: left .6s ease-in-out, transform .6s ease-in-out, box-shadow .6s ease-in-out;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    box-shadow: -.1em 0 0 .2em #ffffff26, 0 0 0 .2em #ffffff26, .1em 0 0 .2em #ffffff26;
+}
+
+.weather-checkbox__wrap {
+    overflow: hidden;
+}
+
+.weather-checkbox__wrap,
+.weather-checkbox__shadow,
+.weather-checkbox__night {
+    border-radius: 50vw;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.weather-checkbox__shadow {
+    pointer-events: none;
+    z-index: 2;
+    box-shadow: inset 3px 3px 3px 3px #0006;
+}
+
+.weather-checkbox__cloud-front,
+.weather-checkbox__cloud-back {
+    aspect-ratio: 1;
+    color: #fff;
+    z-index: 1;
+    background-color: currentColor;
+    border-radius: 50%;
+    width: .15em;
+    transition: transform .6s ease-in-out;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    box-shadow: .12em -.1em 0 .1em, .03em .05em 0 .1em, -.15em .15em 0 .1em, -.3em .12em 0 .02em, -.45em .13em 0 .06em, -.6em .15em 0 .06em, -.75em .14em 0 .03em;
+}
+
+.weather-checkbox__cloud-back {
+    opacity: .4;
+    z-index: 0;
+    bottom: .08em;
+    right: .02em;
+}
+
+.weather-checkbox__night {
+    transition: transform .6s ease-in-out;
+    transform: translateY(-250%);
+}
+
+.weather-checkbox__star {
+    transform-origin: 0 0;
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    transform: scale(.05)scaleX(.8);
+}
+
+.weather-checkbox__star path:first-of-type {
+    transform: translate(7.1em, .8em);
+}
+
+.weather-checkbox__star path:nth-of-type(2) {
+    transform: translate(6.7em, 2.4em)scale(.5);
+}
+
+.weather-checkbox__star path:nth-of-type(3) {
+    transform: translate(5.7em, .7em)scale(.45);
+}
+
+.weather-checkbox__star path:nth-of-type(4) {
+    transform: translate(5em, 1.8em)scale(.45);
+}
+
+.weather-checkbox__star path:nth-of-type(5) {
+    transform: translate(6em, 3.5em)scale(.7);
+}
+
+.weather-checkbox__star path:nth-of-type(6) {
+    transform: translate(3.1em, .4em);
+}
+
+.weather-checkbox__star path:nth-of-type(7) {
+    transform: translate(1.6em, 1.2em)scale(.45);
+}
+
+.weather-checkbox__star path:nth-of-type(8) {
+    transform: translate(3.4em, 1.8em)scale(.45);
+}
+
+.weather-checkbox__star path:nth-of-type(9) {
+    transform: translate(2em, 2.8em)scale(.25);
+}
+
+.weather-checkbox__star path:nth-of-type(10) {
+    transform: translate(1.5em, 3.3em)scale(.24);
+}
+
+.weather-checkbox__star path:nth-of-type(11) {
+    transform: translate(3em, 3.6em)scale(.3);
+}
+
+#weatherCheckboxInput {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#weatherCheckboxInput:checked+.weather-checkbox {
+    background-color: #000;
+}
+
+#weatherCheckboxInput:checked+.weather-checkbox .weather-checkbox__button {
+    animation: 1s ease-in-out forwards easingBack;
+    left: calc(100% - 16px);
+    transform: translateX(-100%);
+}
+
+#weatherCheckboxInput:checked+.weather-checkbox .weather-checkbox__button:hover,
+#weatherCheckboxInput:checked+.weather-checkbox .weather-checkbox__button:hover+.weather-checkbox__sun-shadow {
+    transition: left .4s ease-in-out, transform .4s ease-in-out;
+    left: calc(100% - 24px);
+    transform: translateX(-100%);
+}
+
+#weatherCheckboxInput:checked+.weather-checkbox .weather-checkbox__sun-shadow {
+    left: calc(100% - 16px);
+    transform: translateX(-100%);
+    box-shadow: .1em 0 0 .2em #ffffff26, 0 0 0 .2em #ffffff26, -.1em 0 0 .2em #ffffff26;
+}
+
+#weatherCheckboxInput:checked+.weather-checkbox .weather-checkbox__cloud-front,
+#weatherCheckboxInput:checked+.weather-checkbox .weather-checkbox__cloud-back {
+    transform: translateY(250%);
+}
+
+#weatherCheckboxInput:checked+.weather-checkbox .weather-checkbox__night {
+    transform: translateY(0);
+}
+
+#weatherCheckboxInput:checked+.weather-checkbox .weather-checkbox__moon {
+    transform: translateX(0);
+}
