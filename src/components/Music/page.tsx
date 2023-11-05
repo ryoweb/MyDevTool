@@ -12,7 +12,7 @@ import { ShuffleIcon } from "./ShuffleIcon";
 export default function Music() {
     const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
     const secretClient = process.env.NEXT_PUBLIC_SPOTIFY_SECRET_CLIENT;
-    const redirectUri = 'http://localhost:3000/';
+    const redirectUri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
     const scope = 'user-read-playback-state user-modify-playback-state user-library-modify playlist-read-private playlist-modify-public user-top-read';
 
     const [accessToken, setAccessToken] = useState<string | null>(null);
